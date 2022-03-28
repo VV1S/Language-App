@@ -32,11 +32,6 @@ public class WaveConfig : ScriptableObject
         return timeBetweenSpawns;
     }
 
-    //public float GetSpawnRandomFactor()
-    //{
-    //    return spawnRandomFactor;
-    //}
-
     public int GetNumberOfEnemies()
     {
         return numberOfEnemies;
