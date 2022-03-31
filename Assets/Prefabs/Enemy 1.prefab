@@ -115,6 +115,8 @@ MonoBehaviour:
   shotCounter: 0
   minTimeBetweenShots: 0.2
   maxTimeBetweenShots: 3
+  deathVFX: {fileID: 3040199920922755832, guid: 3f17dd9b0fd8cc74e8c7e546424e7b74, type: 3}
+  durationOfExplosion: 0
 --- !u!61 &3392660548952185671
 BoxCollider2D:
   m_ObjectHideFlags: 0
