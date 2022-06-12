@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 9044526234013593262}
   - component: {fileID: 9044526234013593263}
   - component: {fileID: -2274198891897237025}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,9 +100,10 @@ MonoBehaviour:
   moveSpeed: 5
   padding: 1
   health: 200
+  selfDamage: 50
   laserPrefab: {fileID: 5138471585836858516, guid: 08e51ea1675d6d44f8c942100d2433ab, type: 3}
-  ProjectileSpeed: 10
-  projectileFiringPeriod: 2
+  ProjectileSpeed: 20
+  projectileFiringPeriod: 0.1
   deathSound: {fileID: 8300000, guid: fb6f265f5882de043b5a00dfde325492, type: 3}
   deathSoundVolume: 0.7
   shootSound: {fileID: 8300000, guid: c894cb38d00a1b84593ad4e5d16642f2, type: 3}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Enemy : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] int scoreValue = 100;
 
     [Header("Shooting")]
+    [SerializeField] bool canShoot = false;
     [SerializeField] GameObject projectile;
     [SerializeField] float ProjectileSpeed = 10f;
     [SerializeField] float shotCounter;
@@ -23,9 +25,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] AudioClip shootSound;
     [SerializeField][Range(0, 1)] float shootSoundVolume = 0.25f;
 
+    [SerializeField] TMP_Text displayedText;
+
     void Start()
     {
         shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
+        UpdateTextbox();
     }
 
     void Update()
@@ -35,11 +40,14 @@ public class Enemy : MonoBehaviour
 
     private void CountDownAndShoot()
     {
-        shotCounter -= Time.deltaTime;
-        if (shotCounter <= 0f)
+        if (canShoot)
         {
-            Fire();
-            shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
+            shotCounter -= Time.deltaTime;
+            if (shotCounter <= 0f)
+            {
+                Fire();
+                shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
+            }
         }
     }
 
@@ -73,10 +81,30 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        FindObjectOfType<GameSession>().AddToScore(scoreValue);
+        CheckWords();
         Destroy(gameObject);
         GameObject explosion = Instantiate(deathVFX, transform.position, transform.rotation);
         Destroy(explosion, durationOfExplosion);
         AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position, deathSoundVolume);
+    }
+    void UpdateTextbox()
+    {
+        var reader = FindObjectOfType<CsvReader>();
+        displayedText.text = reader.ReturnRandomEnglishWordFromList();
+    }
+
+    private void CheckWords()
+    {
+        var currentWord = FindObjectOfType<CurrentWord>();
+        if (currentWord.currentPair.englishWord == displayedText.text)
+        {
+            FindObjectOfType<GameSession>().AddToScore(scoreValue);
+            currentWord.UpdateTextbox();
+        }
+        else
+        {
+            var player = GameObject.FindGameObjectWithTag("Player");
+            player.GetComponent<Player>().GetDamageOfWrongWord();
+        }
     }
 }

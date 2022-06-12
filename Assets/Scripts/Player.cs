@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float padding = 1f;
     [SerializeField] int health = 200;
+    [SerializeField] int selfDamage = 50;
 
     [Header("Projectile")]
     [SerializeField] GameObject laserPrefab;
@@ -83,6 +84,15 @@ public class Player : MonoBehaviour
     {
         health -= damageDealer.GetDamage();
         damageDealer.Hit();
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void GetDamageOfWrongWord()
+    {
+        health -= selfDamage;
         if (health <= 0)
         {
             Die();
