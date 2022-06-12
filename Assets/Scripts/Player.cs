@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private PlayerMove playerMove;
     [Header("Player")]
-    public Joystick joystick;
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float padding = 1f;
     [SerializeField] int health = 200;
@@ -25,6 +25,21 @@ public class Player : MonoBehaviour
     float yMin;
     float xMax;
     float yMax;
+
+    private void Awake()
+    {
+        playerMove = new PlayerMove();
+    }
+
+    private void OnEnable()
+    {
+        playerMove.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerMove?.Disable();
+    }
 
     void Start()
     {
@@ -61,8 +76,8 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        horizontalMove =joystick.Horizontal * moveSpeed * Time.deltaTime;
-        verticalMove =joystick.Vertical * moveSpeed * Time.deltaTime;
+        horizontalMove = playerMove.InGame.Movement.ReadValue<Vector2>().x * moveSpeed * Time.deltaTime;
+        verticalMove = playerMove.InGame.Movement.ReadValue<Vector2>().y * moveSpeed * Time.deltaTime;
 
         var newXPos = Mathf.Clamp(transform.position.x + horizontalMove, xMin, xMax);
         var newYPos = Mathf.Clamp(transform.position.y + verticalMove, yMin, yMax);
