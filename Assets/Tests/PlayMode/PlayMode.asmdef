@@ -5,7 +5,11 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Scripts",
-        "Joystick"
+        "Joystick",
+        "ScriptAssembly",
+        "TMPro",
+        "Unity.TextMeshPro",
+        "Unity.TextMeshPro.Tests"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

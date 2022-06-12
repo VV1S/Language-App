@@ -1,23 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
 public class CsvReader : MonoBehaviour
 {
-    [SerializeField] TextAsset textAssetData;
+    public TextAsset textAssetData;
 
-    [System.Serializable]
-    public class Text
-    {
-        public List<ReadedWord> loadedWords;
-        public Text()
-        {
-            loadedWords = new List<ReadedWord>();
-        }
-    }
-
-    Text myText = new Text();
+    LoadedText myText = new LoadedText();
     void Awake()
     {
         ReadCSV();
