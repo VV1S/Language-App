@@ -11,12 +11,12 @@ public class Player : MonoBehaviour
     [SerializeField] int selfDamage = 50;
 
     [Header("Projectile")]
-    [SerializeField] GameObject laserPrefab;
+    [SerializeField] public GameObject laserPrefab;
     [SerializeField] float ProjectileSpeed = 10f;
     [SerializeField] float projectileFiringPeriod = 2f;
     [SerializeField] AudioClip deathSound;
     [SerializeField][Range(0, 1)] float deathSoundVolume = 0.7f;
-    [SerializeField] AudioClip shootSound;
+    [SerializeField] public AudioClip shootSound;
     [SerializeField][Range(0, 1)] float shootSoundVolume = 0.25f;
     Coroutine firingCoroutine;
     float horizontalMove = 0f;
@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         SetUpMoveBoundaries();
+
     }
 
     void Update()
@@ -65,11 +66,22 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            GameObject laser = Instantiate(laserPrefab,
-                transform.position, Quaternion.identity) as GameObject;
-            laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, ProjectileSpeed);
-            AudioSource.PlayClipAtPoint(shootSound, Camera.main.transform.position, shootSoundVolume);
-            yield return new WaitForSeconds(projectileFiringPeriod);
+            if (Camera.main != null)
+            {
+                GameObject laser = Instantiate(laserPrefab,
+                    transform.position, Quaternion.identity) as GameObject;
+                laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, ProjectileSpeed);
+                AudioSource.PlayClipAtPoint(shootSound, Camera.main.transform.position, shootSoundVolume);
+                yield return new WaitForSeconds(projectileFiringPeriod);
+            }
+            else
+            {
+                GameObject laser = Instantiate(laserPrefab,
+    transform.position, Quaternion.identity) as GameObject;
+                laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, ProjectileSpeed);
+                AudioSource.PlayClipAtPoint(shootSound, transform.position, shootSoundVolume);
+                yield return new WaitForSeconds(projectileFiringPeriod);
+            }
         }
     }
 
@@ -128,10 +140,13 @@ public class Player : MonoBehaviour
 
     private void SetUpMoveBoundaries()
     {
-        Camera gameCamera = Camera.main;
-        xMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + padding;
-        yMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y + padding;
-        xMax = gameCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - padding;
-        yMax = gameCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y - padding;
+        if (Camera.main != null)
+        {
+            Camera gameCamera = Camera.main;
+            xMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + padding;
+            yMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y + padding;
+            xMax = gameCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - padding;
+            yMax = gameCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y - padding;
+        }
     }
 }

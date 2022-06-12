@@ -7,7 +7,7 @@ public class CsvReader : MonoBehaviour
     public TextAsset textAssetData;
 
     LoadedText myText = new LoadedText();
-    void Awake()
+    void Start()
     {
         ReadCSV();
     }
