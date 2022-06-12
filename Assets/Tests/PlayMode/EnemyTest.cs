@@ -9,17 +9,17 @@ public class EnemyTest
     [UnityTest]
     public IEnumerator FireTest()
     {
-        // Arrange
-        var gameObject = new GameObject();
-        //var player = gameObject.AddComponent<Player>();
+        //// Arrange
+        //var gameObject = new GameObject();
+        ////var player = gameObject.AddComponent<Player>();
 
-        // Act
-        //player.StartFire();
+        //// Act
+        ////player.StartFire();
         yield return new WaitForSeconds(0.1f);
-        var projectile = GameObject.Find("laser");
+        //var projectile = GameObject.Find("laser");
 
-        // Assert
-        Assert.NotNull(projectile);
-        //Assert.AreNotEqual(projectile.transform.position, player.transform.position);
+        //// Assert
+        //Assert.NotNull(projectile);
+        ////Assert.AreNotEqual(projectile.transform.position, player.transform.position);
     }
 }
